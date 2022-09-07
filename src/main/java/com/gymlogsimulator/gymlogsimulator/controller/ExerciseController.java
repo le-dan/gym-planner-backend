@@ -20,14 +20,15 @@ import com.gymlogsimulator.gymlogsimulator.service.ExerciseService;
 @RestController
 public class ExerciseController {
     @Autowired
-    ExerciseRepository exerciseRepository;
+    ExerciseRepository repository;
     @Autowired
     ExerciseService exerciseService;
 
     // Add exercise (using JSON put)
     @PostMapping("/addExercise")
-    public Exercise addExercise(@RequestBody Exercise exercise) {
-        return exerciseService.createExercise(exercise);
+    public String addExercise(@RequestBody Exercise exercise) {
+        repository.save(exercise);
+        return "Added exercise: " + exercise.getExercise();
     }
 
     // Add exercises (using JSON put)
@@ -39,20 +40,20 @@ public class ExerciseController {
     // Gets all of the exercises, ex: localhost:8080/exercises
     @GetMapping("/exercises")
     public List<Exercise> getExercises() {
-        return exerciseService.getExercises();
+        return repository.findAll();
     }
 
     // Get exercise by name, ex: localhost:8080/exercises/[pushups]
     @GetMapping("/exercises/{exercise}")
     public ResponseEntity<Exercise> getExerciseByName(@PathVariable String exercise) {
-        return new ResponseEntity<Exercise>(exerciseRepository.findByExercise(exercise), HttpStatus.OK);
+        return new ResponseEntity<Exercise>(repository.findByExercise(exercise), HttpStatus.OK);
     }
 
     // Gets list of exercises based from workout
     // localhost:8080/workouts/[push]
     @GetMapping("/workouts/{name}")
     public ResponseEntity<List<Exercise>> getExercisesByWorkout(@PathVariable String name) {
-        return new ResponseEntity<List<Exercise>>(exerciseRepository.findByWorkout(name), HttpStatus.OK);
+        return new ResponseEntity<List<Exercise>>(repository.findByWorkout(name), HttpStatus.OK);
     }
 
     // Updates exercise

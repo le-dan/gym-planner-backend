@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,25 +19,25 @@ import com.gymlogsimulator.gymlogsimulator.service.ExerciseService;
 @RestController
 public class ExerciseController {
     @Autowired
-    ExerciseRepository repository;
+    private ExerciseRepository repository;
     @Autowired
     ExerciseService exerciseService;
 
     // Add exercise (using JSON put)
-    @PostMapping("/addExercise")
+    @PostMapping("/api/addExercise")
     public String addExercise(@RequestBody Exercise exercise) {
         repository.save(exercise);
         return "Added exercise: " + exercise.getExercise();
     }
 
     // Add exercises (using JSON put)
-    @PostMapping("/addExercises")
+    @PostMapping("/api/addExercises")
     public List<Exercise> addExercises(@RequestBody List<Exercise> exercises) {
         return exerciseService.createExercises(exercises);
     }
 
     // Gets all of the exercises, ex: localhost:8080/exercises
-    @GetMapping("/exercises")
+    @GetMapping("/api/exercises")
     public List<Exercise> getExercises() {
         return repository.findAll();
     }
@@ -56,11 +55,11 @@ public class ExerciseController {
         return new ResponseEntity<List<Exercise>>(repository.findByWorkout(name), HttpStatus.OK);
     }
 
-    // Updates exercise
-    @PutMapping("/updateExercise")
-    public Exercise updateExercise(@RequestBody Exercise exercise) {
-        return exerciseService.updateExercise(exercise);
-    }
+    // // Updates exercise
+    // @PutMapping("/updateExercise")
+    // public Exercise updateExercise(@RequestBody Exercise exercise) {
+    // return exerciseService.updateExercise(exercise);
+    // }
 
     // Deletes exercise
     @DeleteMapping("/exercises/{exercise}")

@@ -7,7 +7,11 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import com.gymlogsimulator.gymlogsimulator.entity.Exercise;
 
 public interface ExerciseRepository extends MongoRepository<Exercise, Integer> {
-    public List<Exercise> findByWorkout(String workout);
+    // Find list of all exercises given userID
+    public List<Exercise> findByUserID(String userID);
+
+    // Find list of all workouts given userID
+    public List<Exercise> findByUserIDAndWorkout(String userID, String workout);
 
     public Exercise findByExercise(String exercise);
 }

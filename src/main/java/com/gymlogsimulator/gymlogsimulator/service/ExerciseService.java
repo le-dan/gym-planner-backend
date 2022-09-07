@@ -1,29 +1,14 @@
 package com.gymlogsimulator.gymlogsimulator.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gymlogsimulator.gymlogsimulator.entity.Exercise;
 import com.gymlogsimulator.gymlogsimulator.repository.ExerciseRepository;
 
 @Service
 public class ExerciseService {
     @Autowired
-    private ExerciseRepository exerciseRepository;
-
-    public Exercise createExercise(Exercise exercise) {
-        return exerciseRepository.save(exercise);
-    }
-
-    public List<Exercise> createExercises(List<Exercise> exercises) {
-        return exerciseRepository.saveAll(exercises);
-    }
-
-    public List<Exercise> getExercises() {
-        return exerciseRepository.findAll();
-    }
+    private ExerciseRepository repository;
 
     // public Exercise updateExercise(Exercise exercise) {
     // Exercise oldExercise = null;
@@ -40,12 +25,4 @@ public class ExerciseService {
     // }
     // return oldExercise;
     // }
-
-    public String deleteExercise(String exercise) {
-        if (exerciseRepository.findByExercise(exercise) != null) {
-            exerciseRepository.delete(exerciseRepository.findByExercise(exercise));
-            return "Exercise deleted";
-        }
-        return "Exercise not found";
-    }
 }

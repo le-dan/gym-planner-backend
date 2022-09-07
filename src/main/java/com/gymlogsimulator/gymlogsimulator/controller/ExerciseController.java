@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,27 +31,35 @@ public class ExerciseController {
 
     // Add exercises (using JSON put)
     @PostMapping("/api/addExercises")
-    public List<Exercise> addExercises(@RequestBody List<Exercise> exercises) {
-        return exerciseService.createExercises(exercises);
+    public String addExercises(@RequestBody List<Exercise> exercises) {
+        repository.saveAll(exercises);
+        String output = "Added these exercises:\n\n";
+        for (Exercise exercise : exercises) {
+            output += String.format("User: %s | Exercise: %s | Workout: %s | Reps: %d | Sets: %d\n",
+                    exercise.getUserID(),
+                    exercise.getExercise(), exercise.getWorkout(), exercise.getRepetitions(), exercise.getSets());
+        }
+        return output;
     }
 
-    // Gets all of the exercises, ex: localhost:8080/exercises
+    // Gets all of the exercises, ex: localhost:8080/api/exercises
     @GetMapping("/api/exercises")
     public List<Exercise> getExercises() {
         return repository.findAll();
     }
 
-    // Get exercise by name, ex: localhost:8080/exercises/[pushups]
-    @GetMapping("/exercises/{exercise}")
-    public ResponseEntity<Exercise> getExerciseByName(@PathVariable String exercise) {
-        return new ResponseEntity<Exercise>(repository.findByExercise(exercise), HttpStatus.OK);
+    // Get list of exercises given userID and workout filter
+    @GetMapping("api/users/{userID}/workouts/{workout}")
+    public ResponseEntity<List<Exercise>> getExerciseByUserIDAndWorkout(@PathVariable String userID,
+            @PathVariable String workout) {
+        return new ResponseEntity<List<Exercise>>(repository.findByUserIDAndWorkout(userID, workout),
+                HttpStatus.OK);
     }
 
-    // Gets list of exercises based from workout
-    // localhost:8080/workouts/[push]
-    @GetMapping("/workouts/{name}")
-    public ResponseEntity<List<Exercise>> getExercisesByWorkout(@PathVariable String name) {
-        return new ResponseEntity<List<Exercise>>(repository.findByWorkout(name), HttpStatus.OK);
+    // Get list of exercises of userID, ex: localhost:8080/api/{userID}/exercises
+    @GetMapping("/api/users/{userID}/exercises")
+    public ResponseEntity<List<Exercise>> getExercisesByWorkout(@PathVariable String userID) {
+        return new ResponseEntity<List<Exercise>>(repository.findByUserID(userID), HttpStatus.OK);
     }
 
     // // Updates exercise
@@ -61,9 +68,9 @@ public class ExerciseController {
     // return exerciseService.updateExercise(exercise);
     // }
 
-    // Deletes exercise
-    @DeleteMapping("/exercises/{exercise}")
-    public String deleteExercise(@PathVariable String exercise) {
-        return exerciseService.deleteExercise(exercise);
-    }
+    // // Deletes exercise
+    // @DeleteMapping("/exercises/{exercise}")
+    // public String deleteExercise(@PathVariable String exercise) {
+    // return exerciseService.deleteExercise(exercise);
+    // }
 }

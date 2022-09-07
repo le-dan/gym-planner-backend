@@ -25,21 +25,21 @@ public class ExerciseService {
         return exerciseRepository.findAll();
     }
 
-    public Exercise updateExercise(Exercise exercise) {
-        Exercise oldExercise = null;
-        if (exerciseRepository.findById(exercise.getId()).orElse(null) != null) {
-            oldExercise = exercise;
-            oldExercise.setWorkout(exercise.getWorkout());
-            oldExercise.setExercise(exercise.getExercise());
-            oldExercise.setRepetitions(exercise.getRepetitions());
-            oldExercise.setSets(exercise.getSets());
+    // public Exercise updateExercise(Exercise exercise) {
+    // Exercise oldExercise = null;
+    // if (exerciseRepository.findById(exercise.getId()).orElse(null) != null) {
+    // oldExercise = exercise;
+    // oldExercise.setWorkout(exercise.getWorkout());
+    // oldExercise.setExercise(exercise.getExercise());
+    // oldExercise.setRepetitions(exercise.getRepetitions());
+    // oldExercise.setSets(exercise.getSets());
 
-            exerciseRepository.save(oldExercise);
-        } else {
-            return new Exercise();
-        }
-        return oldExercise;
-    }
+    // exerciseRepository.save(oldExercise);
+    // } else {
+    // return new Exercise();
+    // }
+    // return oldExercise;
+    // }
 
     public String deleteExercise(String exercise) {
         if (exerciseRepository.findByExercise(exercise) != null) {

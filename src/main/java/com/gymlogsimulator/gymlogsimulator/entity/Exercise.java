@@ -1,19 +1,19 @@
 package com.gymlogsimulator.gymlogsimulator.entity;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+
 @Document(collection = "Exercise")
 public class Exercise {
-    @Id
-    private int id;
+    // username for individual
+    private String userID;
 
     private String workout;
     private String exercise;

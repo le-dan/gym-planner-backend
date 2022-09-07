@@ -40,4 +40,12 @@ public class ExerciseService {
         }
         return oldExercise;
     }
+
+    public String deleteExercise(String exercise) {
+        if (exerciseRepository.findByExercise(exercise) != null) {
+            exerciseRepository.delete(exerciseRepository.findByExercise(exercise));
+            return "Exercise deleted";
+        }
+        return "Exercise not found";
+    }
 }

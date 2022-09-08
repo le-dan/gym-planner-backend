@@ -32,6 +32,13 @@ public class UserService {
         return user.getExercises().stream().filter(exercise -> exercise.getWorkout().equals(workout)).toList();
     }
 
+    // Delete exercise from user
+    public void deleteExercise(String username, String exercise) {
+        User user = getUser(username);
+        user.getExercises().removeIf(exerciseFromList -> exerciseFromList.getExercise().equals(exercise));
+        repository.save(user);
+    }
+
     // Gets user
     public User getUser(String username) {
         return repository.findByUsername(username);

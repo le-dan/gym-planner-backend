@@ -3,6 +3,7 @@ package com.gymlogsimulator.gymlogsimulator.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,9 +56,11 @@ public class UserController {
         return service.getExercisesFromWorkout(username, workout);
     }
 
-    // // Deletes exercise
-    // @DeleteMapping("/exercises/{exercise}")
-    // public String deleteExercise(@PathVariable String exercise) {
-    // return exerciseService.deleteExercise(exercise);
-    // }
+    // Remove exercise from {user}
+    @DeleteMapping("/api/users/{username}/removeExercise/{exercise}")
+    public String removeExerciseFromUser(@PathVariable String username, @PathVariable String exercise) {
+        service.deleteExercise(username, exercise);
+        return "Removed " + exercise + " from user: " + username;
+    }
+
 }

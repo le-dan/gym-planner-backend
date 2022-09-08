@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,7 +44,7 @@ public class ExerciseController {
     }
 
     // Gets all of the exercises, ex: localhost:8080/api/exercises
-    @GetMapping("/api/exercises")
+    @GetMapping("/api/allExercises")
     public List<Exercise> getExercises() {
         return repository.findAll();
     }
@@ -62,11 +63,11 @@ public class ExerciseController {
         return new ResponseEntity<List<Exercise>>(repository.findByUserID(userID), HttpStatus.OK);
     }
 
-    // // Updates exercise
-    // @PutMapping("/updateExercise")
-    // public Exercise updateExercise(@RequestBody Exercise exercise) {
-    // return exerciseService.updateExercise(exercise);
-    // }
+    // Updates exercise
+    @PutMapping("api/updateExercise")
+    public Exercise updateExercise(@RequestBody Exercise exercise) {
+        return exerciseService.updateExercise(exercise);
+    }
 
     // // Deletes exercise
     // @DeleteMapping("/exercises/{exercise}")

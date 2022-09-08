@@ -26,6 +26,12 @@ public class UserService {
         return getUser(username).getExercises();
     }
 
+    // Get list of exercises based on workout from user
+    public List<Exercise> getExercisesFromWorkout(String username, String workout) {
+        User user = getUser(username);
+        return user.getExercises().stream().filter(exercise -> exercise.getWorkout().equals(workout)).toList();
+    }
+
     // Gets user
     public User getUser(String username) {
         return repository.findByUsername(username);

@@ -23,6 +23,19 @@ public class UserController {
     @Autowired
     UserService service;
 
+    /*
+     * Create user example:
+     * {
+     * "username": "test"
+     * "exercises": []
+     * }
+     */
+    @PostMapping("/api/addUser")
+    public String createUser(@RequestBody User user) {
+        repository.save(user);
+        return "Added user: " + user.getUsername();
+    }
+
     // Add exercise to {user}
     @PostMapping("/api/users/{username}/addExercise")
     public String addExercise(@PathVariable String username, @RequestBody Exercise exercise) {
@@ -32,27 +45,15 @@ public class UserController {
 
     // Get list of all exercises from {user}
     @GetMapping("/api/users/{username}/exercises")
-    public List<Exercise> getExercisesByWorkout(@PathVariable String username) {
+    public List<Exercise> getExercisesFromUser(@PathVariable String username) {
         return service.getAllExercises(username);
     }
 
-    // Create user
-    @PostMapping("/api/addUser")
-    public String createUser(@RequestBody User user) {
-        repository.save(user);
-        return "Added user: " + user.getUsername();
+    // Get list of exercises based on workout from {user}
+    @GetMapping("/api/users/{username}/workouts/{workout}")
+    public List<Exercise> getExercisesFromWorkout(@PathVariable String username, @PathVariable String workout) {
+        return service.getExercisesFromWorkout(username, workout);
     }
-
-    // Get list of exercises given userID and workout filter
-    // @GetMapping("api/users/{userID}/workouts/{workout}")
-    // public ResponseEntity<List<Exercise>>
-    // getExerciseByUserIDAndWorkout(@PathVariable String userID,
-    // @PathVariable String workout) {
-    // return new
-    // ResponseEntity<List<Exercise>>(repository.findByUsernameAndWorkout(userID,
-    // workout),
-    // HttpStatus.OK);
-    // }
 
     // // Deletes exercise
     // @DeleteMapping("/exercises/{exercise}")

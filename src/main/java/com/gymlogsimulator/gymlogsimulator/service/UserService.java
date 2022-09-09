@@ -15,10 +15,23 @@ public class UserService {
     private UserRepository repository;
 
     // Add exercise to user
-    public void addExercise(String username, Exercise exercise) {
+    public String addExercise(String username, Exercise exercise) {
         User user = getUser(username);
         user.getExercises().add(exercise);
         repository.save(user);
+        return "Added " + exercise.getExercise() + " to user: " + username;
+    }
+
+    // Add list of exercises to user
+    public String addExercises(String username, List<Exercise> exercises) {
+        User user = getUser(username);
+        String output = "";
+        for (Exercise exercise : exercises) {
+            user.getExercises().add(exercise);
+            output += String.format("Added %s to user: %s\n", exercise.getExercise(), username);
+        }
+        repository.save(user);
+        return output;
     }
 
     // Get list of all exercises from user

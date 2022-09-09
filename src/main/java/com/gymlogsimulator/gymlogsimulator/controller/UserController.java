@@ -41,8 +41,14 @@ public class UserController {
     // Add exercise to {user}
     @PostMapping("/api/users/{username}/addExercise")
     public String addExercise(@PathVariable String username, @RequestBody Exercise exercise) {
-        service.addExercise(username, exercise);
-        return "Added " + exercise.getExercise() + " to user: " + username;
+        return service.addExercise(username, exercise);
+
+    }
+
+    // Add list of exercises to {user}
+    @PostMapping("/api/users/{username}/addExercises")
+    public String addExercises(@PathVariable String username, @RequestBody List<Exercise> exercises) {
+        return service.addExercises(username, exercises);
     }
 
     // Get exercise from user
@@ -78,4 +84,9 @@ public class UserController {
         return "Removed " + exercise + " from user: " + username;
     }
 
+    // Get all users
+    @GetMapping("/api/users")
+    public List<User> getUsers() {
+        return repository.findAll();
+    }
 }

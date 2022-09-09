@@ -33,16 +33,17 @@ public class UserService {
     }
 
     // Update exercise from user
-    public void updateExercise(String username, Exercise exercise) {
+    public String updateExercise(String username, String exercise, Exercise exerciseFromUser) {
         User user = getUser(username);
-        List<Exercise> exercises = user.getExercises();
-        for (int i = 0; i < exercises.size(); i++) {
-            if (exercises.get(i).getExercise().equals(exercise.getExercise())) {
-                exercises.set(i, exercise);
-                break;
-            }
+        if (user.getExercises().stream()
+                .anyMatch(exerciseFromList -> exerciseFromList.getExercise().equals(exercise))) {
+            // remove exercise from stream
+            user.getExercises().removeIf(exerciseFromList -> exerciseFromList.getExercise().equals(exercise));
+            user.getExercises().add(exerciseFromUser);
+            repository.save(user);
+            return "Updated exercise: " + exercise + " from user: " + username;
         }
-        repository.save(user);
+        return "Exercise: " + exercise + " not found in user: " + username;
     }
 
     // Delete exercise from user

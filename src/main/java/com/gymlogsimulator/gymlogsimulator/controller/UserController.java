@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -64,7 +65,11 @@ public class UserController {
     }
 
     // Update exercise from {user}
-    @PostMapping("/api/users/{username}/updateExercise")
+    @PutMapping("/api/users/{username}/exercises/{exercise}/updateExercise")
+    public String updateExercise(@PathVariable String username, @PathVariable String exercise,
+            @RequestBody Exercise exerciseFromUser) {
+        return service.updateExercise(username, exercise, exerciseFromUser);
+    }
 
     // Remove exercise from {user}
     @DeleteMapping("/api/users/{username}/removeExercise/{exercise}")

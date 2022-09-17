@@ -3,6 +3,7 @@ package com.gymlogsimulator.gymlogsimulator.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import com.gymlogsimulator.gymlogsimulator.entity.User;
 import com.gymlogsimulator.gymlogsimulator.repository.UserRepository;
 import com.gymlogsimulator.gymlogsimulator.service.UserService;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class UserController {
 

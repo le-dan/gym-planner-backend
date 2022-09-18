@@ -16,6 +16,14 @@ import lombok.ToString;
 public class User {
     @Id
     private String username;
+    private List<Workout> workouts;
 
-    private List<Exercise> exercises;
+    public Workout getWorkout(String workoutName) {
+        for (Workout workout : workouts) {
+            if (workout.getWorkoutName().equals(workoutName)) {
+                return workout;
+            }
+        }
+        return null;
+    }
 }

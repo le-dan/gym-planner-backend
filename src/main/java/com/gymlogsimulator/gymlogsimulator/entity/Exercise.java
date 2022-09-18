@@ -8,8 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Exercise {
-    private String workout;
-    private String exercise;
+    private String exerciseName;
     private int repetitions;
     private int sets;
 }

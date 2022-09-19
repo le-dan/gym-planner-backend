@@ -96,6 +96,12 @@ public class UserController {
         return service.getWorkouts(username);
     }
 
+    // Get one user
+    @GetMapping("/api/users/{username}")
+    public User getUser(@PathVariable String username) {
+        return service.getUser(username);
+    }
+
     // Get all users
     @GetMapping("/api/users")
     public List<User> getUsers() {
